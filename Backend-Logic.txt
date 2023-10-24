@@ -1,0 +1,27 @@
+设置编码：指定文件的字符编码为utf-8。
+
+代码元信息：注释部分告诉我们这是在Google Colaboratory中自动生成的，并给出了原始文件的链接地址。
+
+安装依赖：使用pip命令安装了五个Python包：langchain, pinecone-client, openai, tiktoken 和 nest_asyncio。
+
+设置API密钥：
+
+为OpenAI设置API密钥。
+为Pinecone设置API密钥。
+从Web加载数据：使用langchain.document_loaders.sitemap的SitemapLoader从指定的网站地图URL(https://ind.nl/sitemap.xml)加载页面。代码中指定了只加载包含https://ind.nl/en的URL。
+
+拆分文档文本：为了使文本适应语言模型的限制，它使用RecursiveCharacterTextSplitter从langchain.text_splitter将长文本拆分为更小的块。
+
+创建嵌入：使用OpenAIEmbeddings从langchain.embeddings.openai生成文档的嵌入。
+
+创建一个向量存储器：向量存储器用于存储文档及其相关的嵌入。代码中使用Pinecone创建了一个名为chatbot的向量存储器。
+
+相似性搜索：给定一个查询，代码将在向量存储器中搜索与查询相似的文档。
+
+构建问题回答链：使用langchain.chains.RetrievalQA创建一个问题回答链，它可以根据相关的上下文块生成答案。链的工作原理是：给定一个问题，它将查找与问题相关的文档，然后使用OpenAI生成基于这些文档的答案。
+
+持续的查询-回答交互：最后，代码进入一个无限循环，不断接收用户的输入，并使用上述的问题回答链生成答案。
+
+输出查询的源文档：除了给出答案，代码还可以输出用于生成答案的源文档。
+
+综上所述，这个代码的主要目的是创建一个问答系统，该系统从Web站点加载文档，将文档嵌入到一个向量空间中，并使用OpenAI生成基于这些文档的答案
